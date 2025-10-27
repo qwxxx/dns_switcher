@@ -14,7 +14,14 @@ pub fn hide_app_from_dock() {
     }
 }
 pub fn load_custom_dns_from_config() -> Option<DnsConfig> {
-    if let Ok(content) = fs::read_to_string("./dns_config.yaml") {
+    if let Ok(content) = fs::read_to_string(
+        std::env::current_exe()
+            .ok()?
+            .parent()?
+            .parent()?
+            .join("Resources")
+            .join("dns_config.yaml"),
+    ) {
         match serde_yaml::from_str(&content) {
             Ok(config) => return Some(config),
             Err(e) => eprintln!("Failed to parse config file: {}", e),

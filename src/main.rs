@@ -116,7 +116,6 @@ impl Render for AppView {
             .text_color(gpui::white())
             .size_full()
             .justify_center()
-            //.child(title_bar::my_title_bar())
             .child(
                 gpui::div()
                     .flex_grow()
