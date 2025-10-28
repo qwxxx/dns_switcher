@@ -52,11 +52,9 @@ impl AppData {
         self.dns_list.clear();
         self.app_state = AppState::Loading;
         cx.spawn(async |weakself, app| {
-            app.background_spawn(async move {
-                std::thread::sleep(Duration::from_millis(100));
-            })
-            .await;
-            let result = dns::get_dns_from_system();
+            let result = app
+                .background_spawn(async move { dns::get_dns_from_system() })
+                .await;
             weakself
                 .update(app, move |this, cx| {
                     match result {
